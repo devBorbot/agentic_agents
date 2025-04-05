@@ -12,8 +12,7 @@ if coding_agent is None:
     Check terminal for error details.\n
     Common fixes:\n
     1. Install requirements: `pip install torch transformers`\n
-    2. Create cache directory: `mkdir ~/huggingface_cache`\n
-    3. Restart the app\n
+    2. Restart the app\n
     """)  # Display an error message with troubleshooting steps if the agent is not initialized.
     st.stop()  # Stop further execution of the app.
 

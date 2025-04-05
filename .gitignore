@@ -1,4 +1,4 @@
 *.pdf
 *.csv
-*.env
+.env
 .ipynb_checkpoints/

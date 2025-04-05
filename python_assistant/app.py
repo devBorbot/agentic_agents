@@ -1,5 +1,13 @@
 import streamlit as st  # Import Streamlit for creating web-based interactive applications.
 from coding_agent import coding_agent  # Import the CodeAgent instance for executing coding tasks.
+import os
+
+# Load environment variables from the system (for Streamlit compatibility)
+from dotenv import load_dotenv
+load_dotenv()  # Load variables from .env file if present
+
+# Debugging: Print the token to verify it's loaded
+st.write(f"Token loaded: {os.getenv('HF_API_TOKEN') is not None}")
 
 # Set up the Streamlit app interface
 st.title("🤖 Python Coding Assistant")  # Display the app title.

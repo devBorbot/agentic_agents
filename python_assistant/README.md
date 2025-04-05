@@ -92,6 +92,32 @@ init_jupyter()
 
 ---
 
+#### **4. Test Code**
+1. Suggest Improvements: Improvements are only list comprehension...for now
+```python
+numbers = []
+for i in range(10):
+    numbers.append(i)
+```
+
+2. Debug
+```python
+print(x)
+```
+
+3. Generate Docs
+```python
+def add_numbers(a: int, b: int) -> int:
+    return a + b
+```
+
+4. Format Code
+```python
+def add_numbers(a,b):return a+b
+```
+
+---
+
 ### **Troubleshooting**
 
 If you encounter issues:

@@ -1,51 +1,30 @@
 # coding_agent.py
-from smolagents import CodeAgent, LocalModel
+from smolagents import CodeAgent, TransformersModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from coding_tools import code_suggester, code_debugger, docstring_generator, code_formatter
+import os
 
-# Load the model and tokenizer locally
-model_name = "Qwen/Qwen2.5-Coder-32B-Instruct"
+def create_coding_agent():
+    # Configuration
+    cache_base = os.path.expanduser("~/huggingface_cache")
+    os.makedirs(cache_base, exist_ok=True)
+    model_name = "Qwen/Qwen2.5-Coder-7B-Instruct"  # Smaller model for testing
 
-# Initialize tokenizer and model for local inference
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-local_model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")  # Use GPU if available
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            device_map="auto",
+            trust_remote_code=True,
+            torch_dtype="auto"
+        )
+        return CodeAgent(
+            model=TransformersModel(model=model, tokenizer=tokenizer),
+            tools=[code_suggester, code_debugger, docstring_generator, code_formatter],
+            add_base_tools=True
+        )
+    except Exception as e:
+        print(f"Failed to initialize agent: {str(e)}")
+        return None  # Handle gracefully
 
-# Define a wrapper for local inference
-class LocalModelWrapper(LocalModel):
-    def __init__(self, model, tokenizer):
-        self.model = model
-        self.tokenizer = tokenizer
+coding_agent = create_coding_agent()
 
-    def generate(self, prompt: str, max_tokens: int = 100):
-        inputs = self.tokenizer(prompt, return_tensors="pt").to("cuda")  # Move tensors to GPU if available
-        outputs = self.model.generate(**inputs, max_new_tokens=max_tokens)
-        response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-        return response
-
-# Create an instance of the local model wrapper
-local_model_wrapper = LocalModelWrapper(local_model, tokenizer)
-
-# Initialize the CodeAgent with local inference
-coding_agent = CodeAgent(
-    tools=[code_suggester, code_debugger, docstring_generator, code_formatter],
-    model=local_model_wrapper,
-    add_base_tools=True
-)
-
-# Example usage of the coding agent
-prompt = "Write a Python function to calculate factorial."
-response = coding_agent.run(prompt)
-print(response)
-
-
-# # coding_agent.py
-# from smolagents import CodeAgent, HfApiModel
-# from coding_tools import code_suggester, code_debugger, docstring_generator, code_formatter
-
-# model = HfApiModel(model_id="Qwen/Qwen2.5-Coder-32B-Instruct", token="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")
-
-# coding_agent = CodeAgent(
-#     tools=[code_suggester, code_debugger, docstring_generator, code_formatter],
-#     model=model,
-#     add_base_tools=True
-# )

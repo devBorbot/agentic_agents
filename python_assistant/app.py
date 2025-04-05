@@ -12,6 +12,5 @@ if st.button("Execute"):
     with st.spinner("Agent is working..."):
         response = coding_agent.run(
             f"{task} for this code: {code_input}",
-            display=True
         )
         st.code(response, language="python")

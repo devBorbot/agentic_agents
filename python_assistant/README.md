@@ -1,7 +1,3 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
-
-# README.md
-
 ## Python Coding Assistant
 
 This repository contains a Python-based coding assistant designed to enhance coding workflows. It leverages AI-powered tools for code suggestions, debugging, documentation generation, and formatting. The assistant can be used interactively via Jupyter notebooks or a Streamlit web interface.

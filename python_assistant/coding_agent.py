@@ -1,30 +1,25 @@
 # coding_agent.py
-from smolagents import CodeAgent, TransformersModel
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import os
 
-def create_coding_agent():
-    # Configuration
-    cache_base = os.path.expanduser("~/huggingface_cache")
-    os.makedirs(cache_base, exist_ok=True)
-    model_name = "Qwen/Qwen2.5-Coder-7B-Instruct"  # Smaller model for testing
+# Import necessary classes and tools from external libraries
+from smolagents import CodeAgent, HfApiModel  # CodeAgent handles coding tasks and HfApiModel provides access to a specific AI model.
+from coding_tools import code_suggester, code_debugger, docstring_generator, code_formatter  # Import tools for various coding functionalities.
 
-    try:
-        tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-        model = AutoModelForCausalLM.from_pretrained(
-            model_name,
-            device_map="auto",
-            trust_remote_code=True,
-            torch_dtype="auto"
-        )
-        return CodeAgent(
-            model=TransformersModel(model=model, tokenizer=tokenizer),
-            tools=[code_suggester, code_debugger, docstring_generator, code_formatter],
-            add_base_tools=True
-        )
-    except Exception as e:
-        print(f"Failed to initialize agent: {str(e)}")
-        return None  # Handle gracefully
+# Initialize the AI model using HfApiModel
+# The model_id specifies the identifier for the model hosted on Hugging Face's API.
+# The token is an authentication key required to access the model.
+model = HfApiModel(
+    model_id="Qwen/Qwen2.5-Coder-32B-Instruct",  # Model ID for the Qwen2.5-Coder-32B-Instruct AI model.
+    token="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"  # Authentication token for accessing the Hugging Face API.
+)
 
-coding_agent = create_coding_agent()
+# Create an instance of CodeAgent to perform coding-related tasks
+coding_agent = CodeAgent(
+    tools=[code_suggester, code_debugger, docstring_generator, code_formatter],  # List of tools for enhancing coding workflows:
+    # - code_suggester: Suggests improvements or additions to code.
+    # - code_debugger: Identifies and resolves issues in code.
+    # - docstring_generator: Generates documentation strings for functions and classes.
+    # - code_formatter: Formats code according to style guidelines.
+    model=model,  # Assign the initialized AI model to the agent.
+    add_base_tools=True  # Include additional base tools provided by the CodeAgent class.
+)
 

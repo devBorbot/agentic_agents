@@ -68,16 +68,7 @@ pip install streamlit torch transformers smolagents black pylint
 ```
 
 
-#### **2. Initialize Hugging Face Cache Directory**
-
-Create a cache directory if not already present:
-
-```bash
-mkdir ~/huggingface_cache
-```
-
-
-#### **3. Run the Streamlit App**
+#### **2. Run the Streamlit App**
 
 Start the web interface by running:
 
@@ -86,7 +77,7 @@ streamlit run app.py
 ```
 
 
-#### **4. Use in Jupyter Notebooks**
+#### **3. Use in Jupyter Notebooks**
 
 To enable Jupyter integration:
 
@@ -111,9 +102,21 @@ If you encounter issues:
 
 ---
 
-### **License**
+## **License**
 
-This project is licensed under [MIT License].
+This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). 
+
+You are free to:
+- Share: Copy and redistribute the material in any medium or format.
+- Adapt: Remix, transform, and build upon the material.
+
+Under the following terms:
+- Attribution: You must give appropriate credit, provide a link to the license, and indicate if changes were made.
+- NonCommercial: You may not use the material for commercial purposes.
+- ShareAlike: If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+
+For more details, visit [Creative Commons License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
 
 ---
 

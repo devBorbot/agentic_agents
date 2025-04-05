@@ -5,7 +5,7 @@ from smolagents import CodeAgent, HfApiModel  # CodeAgent handles coding tasks a
 from coding_tools import code_suggester, code_debugger, docstring_generator, code_formatter  # Import tools for various coding functionalities.
 import os
 
-# Load environment variables from the system (for Streamlit compatibility)
+# Load environment variables from the system
 from dotenv import load_dotenv
 load_dotenv()  # Load variables from .env file if present
 
@@ -15,7 +15,6 @@ print(f"Token loaded: {os.getenv('HF_API_TOKEN') is not None}")
 token = os.getenv("HF_API_TOKEN")
 if token is None or token == "":
     raise ValueError("HF_API_TOKEN environment variable is not set or empty.")
-print(f"Token fetched: {token}")  # Debug statement
 
 # Initialize the AI model using HfApiModel
 # The model_id specifies the identifier for the model hosted on Hugging Face's API.

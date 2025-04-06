@@ -30,6 +30,8 @@ code_input = st.text_area("Enter your Python code:", height=200)  # Create a tex
 # Dropdown menu for selecting the task to perform on the code
 task = st.selectbox(
     "Select task:",
+    # these tasks are not exactly named as the CodeAgent variables in coding_agent.py
+    # CodeAgent has NLP capabilities to match and keep user-friendly names
     ["Suggest Improvements", "Debug", "Generate Docs", "Format Code"]  # List of available tasks for the CodeAgent.
 )
 
